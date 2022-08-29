@@ -3,10 +3,30 @@ class TransactionImport
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-
   attr_accessor :file, :user_id
 
   def initialize(attributes = {})
     attributes.each { |name, value| send("#{name}=", value) }
   end
+
+  def load_imported_transaction
+    spreadsheet = open_file
+    header = spreadsheet.row(1)
+    (2..spreadsheet.last_row).map do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      transaction = Transaction.new
+      transaction.user_id = user_id
+      transaction.attributes = row.to_hash.slice("posted_at", "description", "amount")
+
+      category = Category.find_by(name: row["category"]) || Category.find_by(name: "Miscellaneous")
+      transaction.category_id ||= category.id
+      transaction
+    end
+
+    def open_file
+      case File.extname(file.original_filename)
+      when ".csv", ".xls", ".xlsx" then Roo::Spreadsheet.open(file.path)
+      else raise "Unknown file type: #{file.original_filename}"
+      end
+    end
 end
