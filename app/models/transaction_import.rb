@@ -9,6 +9,24 @@ class TransactionImport
     attributes.each { |name, value| send("#{name}=", value) }
   end
 
+  def save
+    if imported_transactions.map(&:valid?).all?
+      imported_transactions.each(&:save!)
+      true
+    else
+      imported_transactions.each_with_index do |transaction, index|
+        transaction.errors.full_messages.each do |message|
+          errors.add :base, "Row #{index+2}: #{message}"
+        end
+      end
+      false
+    end
+  end
+
+  def imported_transactions
+    @imported_transactions ||= load_imported_transaction
+  end
+
   def load_imported_transaction
     spreadsheet = open_file
     header = spreadsheet.row(1)
