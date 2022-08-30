@@ -2,6 +2,7 @@ class TransactionImport
   include ActiveModel::Model
   include ActiveModel::Conversion
   include ActiveModel::Validations
+  require 'roo'
 
   attr_accessor :file, :user_id
 
