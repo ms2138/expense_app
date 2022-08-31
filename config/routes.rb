@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'transaction_imports/new'
+  
   resources :transactions
   resources :categories
   devise_for :users
