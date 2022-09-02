@@ -41,6 +41,7 @@ class TransactionImport
       transaction.category_id ||= category.id
       transaction
     end
+  end
 
     def open_file
       case File.extname(file.original_filename)
