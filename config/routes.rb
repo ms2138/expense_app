@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
-  get 'transaction_imports/new'
+  resources :transaction_imports, only: [:new, :create]
   
   resources :transactions
   resources :categories
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end
