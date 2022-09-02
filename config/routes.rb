@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resources :transactions
   resources :categories
   devise_for :users
+
+  root "transactions#index"
 end
