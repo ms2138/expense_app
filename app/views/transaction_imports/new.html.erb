@@ -1,2 +1,22 @@
-<h1>TransactionImports#new</h1>
-<p>Find me in app/views/transaction_imports/new.html.erb</p>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body p-4">
+        <h1 class="card-title mb-4 text-center">Transaction Import</h1>
+        <hr />
+        <div>
+          <p>Import transaction records in either CSV or Excel format.  The following columns are allowed.</p>
+          <ul>
+            <li> <b>posted_at</b> - Date transaction was posted </li>
+            <li> <b>description</b> - Description of transaction </li>
+            <li> <b>amount</b> - Decimal amount of transaction</li>
+            <li> <b>category</b> - Category of transaction.  Defaults to Miscellaneous</li>
+          </ul>
+        </div>
+        <div>
+          <%= render "form", object: @transaction_import %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
