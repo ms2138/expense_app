@@ -1,0 +1,7 @@
+<%= form_with(model: object) do |form| %>
+  <div class="input-group">
+    <%= form.file_field :file, class: "form-control", id: "inputGroupFile04" %>
+    <%= form.hidden_field :user_id, value: current_user.id, class: "form-control", id: "inputGroupFile04" %>
+    <%= form.submit "Import", class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
