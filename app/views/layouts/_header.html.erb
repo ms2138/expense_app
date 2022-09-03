@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #24a37d;">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 pb-0">Expense App</span>
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-2">
+        <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Import", new_transaction_import_path, class: "btn btn-outline-light" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Transactions", transactions_path, class: "btn btn-outline-light" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Log out", destroy_user_session_path, alt: 'Log Out', title: 'Log out', data: { turbo_method: :delete }, class: "btn btn-outline-light" %>
+            </li>
+        <% else %>
+            <li class="nav-item">
+              <%= link_to "Login", new_user_session_path, alt: 'Login', title: 'Login', class: "btn btn-outline-light" %> 
+            </li>
+        <% end %>
+      </ul> 
+    </div>
+  </div>
+</nav>
