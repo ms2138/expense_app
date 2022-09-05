@@ -1,22 +1,10 @@
-<div id="<%= dom_id transaction %>">
-  <p>
-    <strong>Posted at:</strong>
-    <%= transaction.posted_at %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= transaction.description %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= transaction.amount %>
-  </p>
-
-  <p>
-    <strong>Category:</strong>
-    <%= transaction.category_id %>
-  </p>
-
-</div>
+<tr>
+  <td><%= transaction.posted_at %></td>
+  <td><%= transaction.description %></td>
+  <td>$<%= transaction.amount %></td>
+  <td>
+    <div id="<%= dom_id transaction %>">
+      <%= render 'category_form', transaction: transaction %>
+    </div>
+  </td>
+</tr>
