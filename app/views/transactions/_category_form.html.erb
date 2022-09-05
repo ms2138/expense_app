@@ -1,0 +1,7 @@
+<%= form_with(model: transaction) do |form| %>
+  <%= form.collection_select :category_id,
+    Category.order(:name),
+    :id, :name, {},
+    onChange: "this.form.requestSubmit()",
+    class: "form-select form-select-sm" %>
+<% end %>
