@@ -1,6 +1,6 @@
 <%= form_with(model: object) do |form| %>
 
-  <%= render 'shared/error_messages', object: object %>
+  <%= render 'shared/error_messages', resource: object %>
 
   <div class="input-group">
     <%= form.file_field :file, class: "form-control", id: "inputGroupFile04" %>
