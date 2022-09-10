@@ -6279,16 +6279,6 @@
   application.debug = false;
   window.Stimulus = application;
 
-  // app/javascript/controllers/hello_controller.js
-  var hello_controller_default = class extends Controller {
-    connect() {
-      this.element.textContent = "Hello World!";
-    }
-  };
-
-  // app/javascript/controllers/index.js
-  application.register("hello", hello_controller_default);
-
   // node_modules/@popperjs/core/lib/index.js
   var lib_exports = {};
   __export(lib_exports, {
