@@ -20,4 +20,20 @@ export default class extends Controller {
     this.chart.destroy()
     this.chart = undefined
   }
+
+  get data () {
+    if (!this.hasDataValue) {
+      console.warn('Chart requires JSON data')
+    }
+
+    return this.dataValue
+  }
+
+  get options() {
+    return {}
+  }
+
+  get plugins() {
+    return {}
+  }
 }
