@@ -1,0 +1,7 @@
+<%= form_with(method: :get, local: true, class: "col-2") do |form| %>
+  <%= form.select :month, 
+      options_for_select(months, session[:month_selection] == 0 ? Time.now.month : session[:month_selection]), 
+      {},
+      onChange: "this.form.submit()", 
+      class: "form-select form-select-sm" %>
+<% end %>
