@@ -3,7 +3,12 @@ class TransactionsController < ApplicationController
 
   # GET /transactions or /transactions.json
   def index
-    @pagy, @transactions = pagy(current_user.transactions)
+    selection = selected_month
+    set_month_selection(selection)
+    
+    @transaction_data = Transaction.chart_data_for_month(selection)
+    @chart_data = chart_data_json(@transaction_data.keys, @transaction_data.values)
+    @pagy, @transactions = pagy(current_user.transactions.current_month(selection))
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -36,5 +41,33 @@ class TransactionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def transaction_params
       params.require(:transaction).permit(:posted_at, :description, :amount, :category_id)
+    end
+
+    def chart_data_json(keys, values)
+      chart_data = {
+        labels: keys,
+        datasets: [{
+          data: values,
+          backgroundColor: [
+            'rgba(246, 109, 68, 0.9)',
+            'rgba(45, 135, 187, 0.5)',
+            'rgba(100, 194, 166, 0.5)',
+            'rgba(230, 246, 157, 0.5)',
+            'rgba(254, 174, 101, 0.5)',
+            'rgba(0, 63, 92, 0.5)',
+            'rgba(170, 222, 167, 0.5)',
+            'rgba(88, 80, 141, 0.5)',
+          ],
+        }]
+      }.to_json
+    end
+
+    def selected_month
+      month = params[:month].to_i
+      selected_month = month == 0 && !selected_month.nil? ? Time.now.month : selected_month
+    end
+
+    def set_month_selection(month)
+      session[:month_selection] = month
     end
 end
