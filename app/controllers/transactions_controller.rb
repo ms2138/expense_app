@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show edit update ]
-
+  before_action :set_months, only: %i[ index update ]
+  
   # GET /transactions or /transactions.json
   def index
     selection = selected_month
@@ -69,5 +70,12 @@ class TransactionsController < ApplicationController
 
     def set_month_selection(month)
       session[:month_selection] = month
+    end
+
+    def set_months
+      @months = 12.downto(1).map { |a| 
+        month = Date::MONTHNAMES[a]
+        [month, Date.parse(month).month] 
+      }.to_h
     end
 end
