@@ -65,7 +65,8 @@ class TransactionsController < ApplicationController
 
     def selected_month
       month = params[:month].to_i
-      selected_month = month == 0 && !selected_month.nil? ? Time.now.month : selected_month
+      selected_month = month == 0 && !month.nil? ? Time.now.month : month
+      return selected_month
     end
 
     def set_month_selection(month)
