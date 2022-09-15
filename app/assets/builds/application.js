@@ -20333,29 +20333,41 @@
     connect() {
       const element = this.hasCanvasTarget ? this.canvasTarget : this.element;
       this.chart = new auto_default(element.getContext("2d"), {
-        type: this.type || "line",
-        data: this.data,
-        options: this.options,
-        plugins: this.plugins
+        type: this.typeValue || "line",
+        data: this.chartData,
+        options: {
+          ...this.defaultOptions,
+          ...this.optionsValue
+        },
+        plugins: {
+          ...this.defaultPlugins,
+          ...this.pluginsValue
+        }
       });
     }
     disconnect() {
       this.chart.destroy();
       this.chart = void 0;
     }
-    get data() {
+    get chartData() {
       if (!this.hasDataValue) {
         console.warn("Chart requires JSON data");
       }
       return this.dataValue;
     }
-    get options() {
+    get defaultOptions() {
       return {};
     }
-    get plugins() {
+    get defaultPlugins() {
       return {};
     }
   };
+  __publicField(chart_controller_default, "values", {
+    type: String,
+    data: Object,
+    options: Object,
+    plugins: Object
+  });
 
   // app/javascript/controllers/index.js
   application.register("chart", chart_controller_default);

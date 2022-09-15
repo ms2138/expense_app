@@ -5,14 +5,27 @@ import { Controller } from "@hotwired/stimulus";
 import Chart from 'chart.js/auto';
 
 export default class extends Controller {
+  static values = {
+    type: String,
+    data: Object,
+    options: Object,
+    plugins: Object
+  }
+
   connect() {
     const element = this.hasCanvasTarget ? this.canvasTarget : this.element
 
     this.chart = new Chart(element.getContext('2d'), {
-      type: this.type || 'line',
-      data: this.data,
-      options: this.options,
-      plugins: this.plugins
+      type: this.typeValue || 'line',
+      data: this.chartData,
+      options: {
+        ...this.defaultOptions,
+        ...this.optionsValue
+      },
+      plugins: {
+        ...this.defaultPlugins,
+        ...this.pluginsValue
+      }
     })
   }
 
@@ -21,7 +34,7 @@ export default class extends Controller {
     this.chart = undefined
   }
 
-  get data () {
+  get chartData () {
     if (!this.hasDataValue) {
       console.warn('Chart requires JSON data')
     }
@@ -29,11 +42,11 @@ export default class extends Controller {
     return this.dataValue
   }
 
-  get options() {
+  get defaultOptions() {
     return {}
   }
 
-  get plugins() {
+  get defaultPlugins() {
     return {}
   }
 }
