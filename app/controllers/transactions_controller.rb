@@ -4,12 +4,13 @@ class TransactionsController < ApplicationController
   
   # GET /transactions or /transactions.json
   def index
-    selection = selected_month
-    set_month_selection(selection)
+    month_selection = selected_month
+    year = Time.now.year
+    set_month_selection(month_selection)
     
-    @transaction_data = Transaction.chart_data_for_month(selection)
+    @transaction_data = Transaction.chart_data_for_month(month_selection, year)
     @chart_data = chart_data_json(@transaction_data.keys, @transaction_data.values)
-    @pagy, @transactions = pagy(current_user.transactions.current_month(selection))
+    @pagy, @transactions = pagy(current_user.transactions.current_month(month_selection, year))
   end
 
   # GET /transactions/1 or /transactions/1.json
