@@ -20339,10 +20339,10 @@
           ...this.defaultOptions,
           ...this.optionsValue
         },
-        plugins: {
-          ...this.defaultPlugins,
-          ...this.pluginsValue
-        }
+        plugins: [
+          this.defaultPlugins,
+          this.pluginsValue
+        ]
       });
     }
     disconnect() {
@@ -20356,10 +20356,44 @@
       return this.dataValue;
     }
     get defaultOptions() {
-      return {};
+      return {
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let formatConfig = {
+                  style: "currency",
+                  currency: "USD",
+                  currencySign: "accounting"
+                };
+                let label = context.label + ": " + new Intl.NumberFormat("en-US", formatConfig).format(context.formattedValue.replace(/,/g, ""));
+                return label;
+              }
+            }
+          }
+        }
+      };
     }
     get defaultPlugins() {
-      return {};
+      return {
+        afterDraw: function(chart, args, options) {
+          const { datasets } = chart.data;
+          if (datasets[0].data.length < 1) {
+            let ctx = chart.ctx;
+            let width = chart.width;
+            let height = chart.height;
+            chart.clear();
+            ctx.save();
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.font = "30px Arial";
+            ctx.fillStyle = "#adadad";
+            ctx.fillText("No data to display", width / 2, height / 2);
+            ctx.restore();
+          }
+        }
+      };
     }
   };
   __publicField(chart_controller_default, "values", {
