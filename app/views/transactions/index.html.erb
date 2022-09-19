@@ -1,25 +1,31 @@
-<%= render "chart", chart_data: @chart_data %>
+<div>
+  <div class="pb-5 d-flex align-items-center justify-content-center" id="chart">
+    <%= render "chart", chart_data: @chart_data %>
+  </div>
 
-<%= render "select_month_form", months: @months %>
+  <div class="pb-5 d-flex align-items-center justify-content-center">
+    <%= render "select_month_form", months: @months %>
+  </div>
 
-<hr />
+  <hr />
 
-<h2 class="pt-2">Transactions</h2>
+  <h2 class="pt-2">Transactions</h2>
 
-<table class="table table-striped">
-  <thead class="">
-    <tr>
-      <th scope="col">Posted</th>
-      <th scope="col">Description</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @transactions.each do |transaction| %>
-      <%= render transaction %>
-    <% end %>
-  </tbody>
-</table>
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">Posted</th>
+        <th scope="col">Description</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <%= render transaction %>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= render "shared/pagination" %>
+  <%= render "shared/pagination" %>
+</div>
