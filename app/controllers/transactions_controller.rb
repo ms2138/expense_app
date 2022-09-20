@@ -25,6 +25,21 @@ class TransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
+        month_selection = get_month_selection
+          
+        if month_selection == @months[Date::MONTHNAMES[month_selection]]
+          year = Time.now.year
+          transaction_data = Transaction.chart_data_for_month(month_selection, year)
+          @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
+          @pagy, @transactions = pagy(current_user.transactions.current_month(month_selection, year))
+        end
+
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update(helpers.dom_id(@transaction), partial: 'transactions/category_form', locals: { transaction: @transaction }),
+            turbo_stream.update("chart", partial: 'transactions/chart', locals: { chart_data: @chart_data })
+          ]
+        end
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
         format.json { render :show, status: :ok, location: @transaction }
       else
@@ -72,6 +87,10 @@ class TransactionsController < ApplicationController
 
     def set_month_selection(month)
       session[:month_selection] = month
+    end
+
+    def get_month_selection
+      session[:month_selection]
     end
 
     def set_months
