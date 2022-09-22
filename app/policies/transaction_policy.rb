@@ -1,0 +1,3 @@
+class TransactionPolicy < ApplicationPolicy
+
+end
