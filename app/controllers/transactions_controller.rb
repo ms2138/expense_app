@@ -1,6 +1,8 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show edit update ]
   before_action :set_months, only: %i[ index update ]
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
   
   # GET /transactions or /transactions.json
   def index
@@ -10,7 +12,7 @@ class TransactionsController < ApplicationController
     
     @transaction_data = Transaction.chart_data_for_month(month_selection, year)
     @chart_data = chart_data_json(@transaction_data.keys, @transaction_data.values)
-    @pagy, @transactions = pagy(current_user.transactions.current_month(month_selection, year))
+    @pagy, @transactions = pagy(policy_scope(Transactions.current_month(month_selection, year)))
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -52,7 +54,7 @@ class TransactionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
-      @transaction = Transaction.find(params[:id])
+      @transaction = authorize Transaction.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
