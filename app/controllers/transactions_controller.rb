@@ -12,7 +12,7 @@ class TransactionsController < ApplicationController
     
     @transaction_data = Transaction.chart_data_for_month(month_selection, year)
     @chart_data = chart_data_json(@transaction_data.keys, @transaction_data.values)
-    @pagy, @transactions = pagy(policy_scope(Transactions.current_month(month_selection, year)))
+    @pagy, @transactions = pagy(policy_scope(Transaction.current_month(month_selection, year)))
   end
 
   # GET /transactions/1 or /transactions/1.json
