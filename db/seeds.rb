@@ -2,8 +2,8 @@
   email = "jdoe#{i}@example.com"
   password = "hello12"
   @user = User.create!(email: email, password: password, password_confirmation: password)
-end
 
-@restaurant = Category.create!(name: "Restaurants")
-@miscellaneous = Category.create!(name: "Miscellaneous")
-@other = Category.create!(name: "Other")
+  @restaurant = @user.categories.create!(name: "Restaurants")
+  @miscellaneous = @user.categories.create!(name: "Miscellaneous")
+  @other = @user.categories.create!(name: "Other")
+end
