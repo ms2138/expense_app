@@ -18773,6 +18773,10 @@ textarea.form-control-lg {
   content: "\f8cc";
 }
 
+a {
+  text-decoration: none;
+}
+
 #error_explanation ul {
   padding: 0px;
   margin: 0px;
