@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
-  before_action :set_user, only: %i[ index new create destroy ]
+  before_action :set_user, only: %i[ index show new create destroy ]
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
 
@@ -28,10 +28,9 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.turbo_stream do 
-          render turbo_stream: { 
-            render turbo_stream: turbo_stream.prepend("categories", partial: "category", locals: { user: @user, category: @category }) 
-          }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.prepend("categories", partial: "category", locals: { user: @user, category: @category }) 
+        }
         format.html { redirect_to category_url(@category), notice: "Category was successfully created." }
         format.json { render :show, status: :created, location: @category }
       else
