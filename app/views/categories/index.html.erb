@@ -1,5 +1,16 @@
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" data-controller="modal" data-action="turbo:frame-load->modal#open turbo:submit-end->modal#close">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= turbo_frame_tag "modal" %>
+    </div>
+  </div>
+</div>
+
 <div class="d-flex align-items-center justify-content-between">
-  <h1>Categories</h1> <%= link_to "New category", new_user_category_path(@user), class: "btn btn-outline-dark" %>
+  <h1>Categories</h1> 
+  <%= link_to "New category", new_user_category_path(@user), 
+              class: "btn btn-outline-dark", data: { turbo_frame: "modal" } %>
 </div>
 
 <hr />

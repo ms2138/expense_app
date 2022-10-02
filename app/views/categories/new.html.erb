@@ -2,11 +2,14 @@
   <div class="col-md-6">
     <div class="card">
       <div class="card-body p-4">
-        <h1 class="card-title mb-4 text-center">New category</h1>
-        <div class="">
-          <%= render "form", user: @user, category: @category %>
-          <br>
-        </div>
+        <%= turbo_frame_tag "modal" do %>
+          <h1 class="h3 modal-header">
+            New category
+          </h1>
+          <div class="modal-body">
+            <%= render "form", user: @user, category: @category %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
