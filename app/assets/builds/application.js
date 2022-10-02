@@ -20403,9 +20403,6 @@
     plugins: Object
   });
 
-  // app/javascript/controllers/index.js
-  application.register("chart", chart_controller_default);
-
   // node_modules/@popperjs/core/lib/index.js
   var lib_exports = {};
   __export(lib_exports, {
@@ -25584,6 +25581,27 @@
   };
   enableDismissTrigger(Toast);
   defineJQueryPlugin(Toast);
+
+  // app/javascript/controllers/modal_controller.js
+  var modal_controller_default = class extends Controller {
+    connect() {
+      this.modal = new Modal(this.element);
+    }
+    open() {
+      if (!this.modal.isOpened) {
+        this.modal.show();
+      }
+    }
+    close(event) {
+      if (event.detail.success) {
+        this.modal.hide();
+      }
+    }
+  };
+
+  // app/javascript/controllers/index.js
+  application.register("chart", chart_controller_default);
+  application.register("modal", modal_controller_default);
 })();
 /*!
   * Bootstrap v5.2.3 (https://getbootstrap.com/)

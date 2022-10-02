@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
