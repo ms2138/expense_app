@@ -19,4 +19,6 @@
   <% @categories.each do |category| %>
     <%= render "category", user: @user, category: category %>
   <% end %>
+  
+  <%= render "shared/pagination" %>
 </div>

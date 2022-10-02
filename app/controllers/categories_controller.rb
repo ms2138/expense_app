@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories or /categories.json
   def index
-    @categories = policy_scope(@user.categories.order("name ASC"))
+    @pagy, @categories = pagy(policy_scope(@user.categories.ordered))
   end
 
   # GET /categories/1 or /categories/1.json
