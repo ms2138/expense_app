@@ -1,0 +1,16 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body p-4">
+        <%= turbo_frame_tag "modal" do %>
+          <h1 class="h3 modal-header">
+            <%= title %>
+          </h1>
+          <div class="modal-body">
+            <%= render "form", user: user, category: category %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
