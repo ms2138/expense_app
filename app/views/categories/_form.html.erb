@@ -2,8 +2,7 @@
   <%= render 'shared/error_messages', resource: form.object %>
 
   <div class="form-group mb-3">
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name, class: "form-control form-control mb-3" %>
+    <%= form.text_field :name, placeholder: "Name", class: "form-control form-control mb-3" %>
   </div>
 
   <div class="actions d-grid">
