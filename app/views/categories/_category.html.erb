@@ -12,7 +12,8 @@
               |
               <% if policy(category).destroy? %>
                 <%=link_to "Delete", category, 
-                          data: { turbo_method: :delete, turbo_confirm: 'Are you sure? Deleting this category will also delete all associated transactions' } %>
+                          data: { turbo_method: :delete, 
+                                  turbo_confirm: "Are you sure? \n\nDeleting this category will also delete all associated transactions." } %>
               <% end %>
             </span>
           </div>
