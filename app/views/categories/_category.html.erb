@@ -7,13 +7,14 @@
             <b><%= category.name %></b>
             <span>
               <% if policy(category).edit? %>
-                <%=link_to "Edit", edit_category_path(category), data: { turbo_frame: "modal" } %>
+                <%= link_to edit_category_path(category), data: { turbo_frame: "modal" } do %>
+                  <i class="fa fa-edit fa-fw" aria-hidden="true" style="color: rgb(42, 124, 247);"></i>
+                <% end %>
               <% end %> 
-              |
               <% if policy(category).destroy? %>
-                <%=link_to "Delete", category, 
-                          data: { turbo_method: :delete, 
-                                  turbo_confirm: "Are you sure? \n\nDeleting this category will also delete all associated transactions." } %>
+                <%= link_to category, data: { turbo_method: :delete, turbo_confirm: "Are you sure? \n\nDeleting this category will also delete all associated transactions." } do %>
+                  <i class="fas fa-remove fa-fw fa-lg" aria-hidden="true" style="color: rgb(42, 124, 247);"></i>
+                <% end %>
               <% end %>
             </span>
           </div>
