@@ -1,7 +1,5 @@
-<%= form_with(method: :get, local: true, class: "col-3") do |form| %>
-  <%= form.select :month, 
-      options_for_select(months, session[:month_selection] == 0 ? Time.now.month : session[:month_selection]), 
-      {},
-      onChange: "this.form.submit()", 
-      class: "form-select form-select-sm" %>
+<%= form_with(method: :get, local: true, class: "col-3 d-flex align-items-center justify-content-between") do |form| %>
+    <%= select_date Time.new(@year_selection, @month_selection), 
+                    { start_year: Time.now.year, end_year: Time.now.year - 30, discard_day: true }, 
+                    { onChange: "this.form.submit()", class: "form-select form-select-sm me-2" } %>
 <% end %>
