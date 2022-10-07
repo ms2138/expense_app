@@ -1,18 +1,18 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show edit update ]
-  before_action :set_months, only: %i[ index update ]
+  before_action :set_selected_month, only: [:index]
+  before_action :set_selected_year, only: [:index]
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
   
   # GET /transactions or /transactions.json
   def index
-    month_selection = selected_month
-    year = Time.now.year
-    set_month_selection(month_selection)
+    set_month_selection(@selected_month)
+    set_year_selection(@selected_year)
     
-    @transaction_data = Transaction.chart_data_for_month(month_selection, year)
+    @transaction_data = Transaction.chart_data_for_month(@selected_month, @selected_year)
     @chart_data = chart_data_json(@transaction_data.keys, @transaction_data.values)
-    @pagy, @transactions = pagy(policy_scope(Transaction.current_month(month_selection, year)))
+    @pagy, @transactions = pagy(policy_scope(Transaction.current_month(@selected_month, @selected_year)))
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -27,14 +27,12 @@ class TransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
-        month_selection = get_month_selection
+        month = get_month_selection
+        year = get_year_selection
           
-        if month_selection == @months[Date::MONTHNAMES[month_selection]]
-          year = Time.now.year
-          transaction_data = Transaction.chart_data_for_month(month_selection, year)
-          @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
-          @pagy, @transactions = pagy(current_user.transactions.current_month(month_selection, year))
-        end
+        transaction_data = Transaction.chart_data_for_month(month, year)
+        @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
+        @pagy, @transactions = pagy(current_user.transactions.current_month(month, year))
 
         format.turbo_stream do
           render turbo_stream: [
@@ -81,24 +79,29 @@ class TransactionsController < ApplicationController
       }.to_json
     end
 
-    def selected_month
-      month = params[:month].to_i
-      selected_month = month == 0 && !month.nil? ? Time.now.month : month
-      return selected_month
+    def set_selected_month
+      month_selection = params[:date][:month].to_i unless params[:date].nil?
+      @selected_month = month_selection.nil? ? Time.now.month : month_selection
+    end
+
+    def set_selected_year
+      year_selection = params[:date][:year].to_i unless params[:date].nil?
+      @selected_year = year_selection.nil? ? Time.now.year : year_selection
     end
 
     def set_month_selection(month)
       session[:month_selection] = month
     end
 
+    def set_year_selection(year)
+      session[:year_selection] = year
+    end
+
     def get_month_selection
       session[:month_selection]
     end
 
-    def set_months
-      @months = 12.downto(1).map { |a| 
-        month = Date::MONTHNAMES[a]
-        [month, Date.parse(month).month] 
-      }.to_h
+    def get_year_selection
+      session[:year_selection]
     end
 end
