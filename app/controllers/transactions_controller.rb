@@ -30,9 +30,9 @@ class TransactionsController < ApplicationController
         month = get_month_selection
         year = get_year_selection
           
-        transaction_data = Transaction.chart_data_for_month(month, year)
+        transaction_data = Transaction.chart_data_for(current_user, month, year)
         @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
-        @pagy, @transactions = pagy(current_user.transactions.current_month(month, year))
+        @pagy, @transactions = pagy(current_user.transactions.all_data_for(current_user, month, year))
 
         format.turbo_stream do
           render turbo_stream: [
