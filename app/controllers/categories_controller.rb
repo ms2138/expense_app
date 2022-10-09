@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
-    @pagy, @transactions = pagy(policy_scope(@user.transactions.ordered))
+    @pagy, @transactions = pagy(policy_scope(@category.transactions.ordered))
   end
 
   # GET /categories/new
