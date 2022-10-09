@@ -4,14 +4,13 @@ class Transaction < ApplicationRecord
 
   scope :ordered, -> { order(posted_at: :asc) }
 
-  def self.chart_data_for_month(month, year)
-    select("transactions.amount, categories.name")
-    .where(posted_at: Time.new(year, month)..Time.new(year, month, Time.days_in_month(month)))
+  def self.chart_data_for(user, month, year)
+    all_data_for(user, month, year)
     .joins(:category)
     .group(:name).sum(:amount)
   end
 
-  def self.current_month(month, year)
-    where(posted_at: Time.new(year, month)..Time.new(year, month, Time.days_in_month(month)))
+  def self.all_data_for(user, month, year)
+    where(posted_at: Time.new(year, month)..Time.new(year, month, Time.days_in_month(month)), user_id: user.id)
   end
 end
