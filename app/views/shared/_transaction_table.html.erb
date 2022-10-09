@@ -1,0 +1,15 @@
+<table class="table table-striped mt-4">
+<thead class="">
+  <tr>
+    <th scope="col">Posted</th>
+    <th scope="col">Description</th>
+    <th scope="col">Amount</th>
+    <th scope="col">Category</th>
+  </tr>
+</thead>
+<tbody>
+  <% transactions.each do |transaction| %>
+    <%= render transaction %>
+  <% end %>
+</tbody>
+</table>
