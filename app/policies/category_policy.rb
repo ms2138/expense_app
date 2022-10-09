@@ -6,11 +6,11 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def show?
-    user.present?
+    user.present? && user == record.user
   end
 
   def create?
-    user.present?
+    user.present? && user == record.user
   end
 
   def new?
