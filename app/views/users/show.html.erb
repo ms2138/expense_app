@@ -1,2 +1,24 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="user-profile">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col col-lg-7 col-lg-6">
+        <div class="d-flex justify-content-center mb-3">
+          <div class="me-4">
+            <div class="ms-4 mt-2 d-flex flex-column">
+              <p class="img-fluid mt-0"><%= gravatar_for @user.email %></p>
+              </div>
+            </div>
+            <div class="my-4 ms-4">
+              <h1><%= @user.name %></h1>
+              <p class="email"><%= @user.email %></p>
+              <p class="">Join date: <%= @user.created_at.to_s(:joined) %></p>
+            </div>            
+          </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-12">
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
