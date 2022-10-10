@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #24a37d;">
   <div class="container-fluid">
-    <span class="navbar-brand">Expense App</span>
+    <span class="navbar-brand mb-0 h1">Expense App</span>
     <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,9 +16,19 @@
             <li class="nav-item">
               <%= link_to "Categories", user_categories_path(current_user), class: "btn btn-outline-light" %>
             </li>
-            <li class="nav-item">
-              <%= link_to "Sign Out", destroy_user_session_path, alt: 'Sign Out', title: 'Sign Out', data: { turbo_method: :delete }, class: "btn btn-outline-light" %>
-            </li>
+            <li class="nav-item dropdown">
+            <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+              <%= current_user.name %>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><%= link_to "Profile", current_user, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= link_to "Sign Out", destroy_user_session_path, alt: 'Sign Out', title: 'Sign Out', 
+                            data: { turbo_method: :delete }, class: "dropdown-item" %>
+              </li>
+            </ul>
+          </li>
         <% else %>
             <li class="nav-item">
               <%= link_to "Sign In", new_user_session_path, alt: 'Sign In', title: 'Sign In', class: "btn btn-outline-light" %> 
