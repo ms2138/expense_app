@@ -18777,6 +18777,12 @@ a {
   text-decoration: none;
 }
 
+.gravatar {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
 #error_explanation ul {
   padding: 0px;
   margin: 0px;
