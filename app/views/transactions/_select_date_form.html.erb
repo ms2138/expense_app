@@ -1,5 +1,6 @@
 <%= form_with(method: :get, local: true, class: "col-3 d-flex align-items-center justify-content-between") do |form| %>
     <%= select_date Time.new(@selected_year, @selected_month), 
                     { start_year: Time.now.year, end_year: Time.now.year - 30, discard_day: true }, 
-                    { onChange: "this.form.submit()", class: "form-select form-select-sm me-2" } %>
+                    { class: "form-select form-select-sm me-2" } %>
+    <%= form.submit "Submit", class: "btn btn-outline-secondary btn-sm" %>
 <% end %>
