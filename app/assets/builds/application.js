@@ -5879,6 +5879,30 @@
   });
 
   // node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js
+  var turbo_es2017_esm_exports = {};
+  __export(turbo_es2017_esm_exports, {
+    FrameElement: () => FrameElement,
+    FrameLoadingStyle: () => FrameLoadingStyle,
+    FrameRenderer: () => FrameRenderer,
+    PageRenderer: () => PageRenderer,
+    PageSnapshot: () => PageSnapshot,
+    StreamActions: () => StreamActions,
+    StreamElement: () => StreamElement,
+    StreamSourceElement: () => StreamSourceElement,
+    cache: () => cache,
+    clearCache: () => clearCache,
+    connectStreamSource: () => connectStreamSource,
+    disconnectStreamSource: () => disconnectStreamSource,
+    navigator: () => navigator$1,
+    registerAdapter: () => registerAdapter,
+    renderStreamMessage: () => renderStreamMessage,
+    session: () => session,
+    setConfirmMethod: () => setConfirmMethod,
+    setFormMode: () => setFormMode,
+    setProgressBarDelay: () => setProgressBarDelay,
+    start: () => start,
+    visit: () => visit
+  });
   (function() {
     if (window.Reflect === void 0 || window.customElements === void 0 || window.customElements.polyfillWrapFlushCallback) {
       return;
@@ -30900,6 +30924,31 @@
 
   // app/javascript/controllers/category_select_controller.js
   var category_select_controller_default = class extends Controller {
+    connect() {
+      this.token = document.querySelector(
+        'meta[name="csrf-token"]'
+      ).content;
+    }
+    selected(e) {
+      const transaction_id = e.target.dataset.id;
+      const category_id = e.currentTarget.value;
+      fetch("/transactions/" + transaction_id, {
+        body: JSON.stringify(
+          {
+            transaction: {
+              category_id
+            }
+          }
+        ),
+        method: "PATCH",
+        credentials: "include",
+        dataType: "script",
+        headers: {
+          "X-CSRF-Token": this.token,
+          "Content-type": "application/json"
+        }
+      }).then((response) => response.text()).then((html) => turbo_es2017_esm_exports.renderStreamMessage(html));
+    }
   };
 
   // app/javascript/controllers/index.js
