@@ -30898,9 +30898,14 @@
     }
   };
 
+  // app/javascript/controllers/category_select_controller.js
+  var category_select_controller_default = class extends Controller {
+  };
+
   // app/javascript/controllers/index.js
   application.register("chart", chart_controller_default);
   application.register("modal", modal_controller_default);
+  application.register("category_select", category_select_controller_default);
 
   // app/javascript/application.js
   require_all();

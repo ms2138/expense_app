@@ -9,3 +9,6 @@ application.register("chart", ChartController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
+
+import CategorySelectController from "./category_select_controller"
+application.register("category_select", CategorySelectController)
