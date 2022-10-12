@@ -1,7 +1,6 @@
-<%= form_with(model: transaction) do |form| %>
-  <%= form.collection_select :category_id,
-    current_user.categories.order(:name),
-    :id, :name, {},
-    onChange: "this.form.requestSubmit()",
-    class: "form-select form-select-sm" %>
-<% end %>
+<%= collection_select(:transaction, :category_id, 
+                      current_user.categories.order(:name), 
+                      :id, :name, { selected: transaction.category_id },
+                      data: { action: "change->category_select#selected",
+                              id: transaction.id },
+                      class: "form-select form-select-sm") %>

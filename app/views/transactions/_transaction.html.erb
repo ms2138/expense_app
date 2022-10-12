@@ -3,7 +3,7 @@
   <td><%= transaction.description %></td>
   <td>$<%= transaction.amount %></td>
   <td>
-    <div id="<%= dom_id transaction %>">
+    <div data-controller="category_select" id="<%= dom_id transaction %>">
       <%= render 'transactions/category_select', transaction: transaction %>
     </div>
   </td>
