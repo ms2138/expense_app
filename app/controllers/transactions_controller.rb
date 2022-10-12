@@ -36,7 +36,7 @@ class TransactionsController < ApplicationController
 
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.update(helpers.dom_id(@transaction), partial: 'transactions/category_form', locals: { transaction: @transaction }),
+            turbo_stream.update(helpers.dom_id(@transaction), partial: 'transactions/category_select', locals: { transaction: @transaction }),
             turbo_stream.update("chart", partial: 'transactions/chart', locals: { chart_data: @chart_data })
           ]
         end
