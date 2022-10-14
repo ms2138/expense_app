@@ -30951,10 +30951,25 @@
     }
   };
 
+  // app/javascript/controllers/checkbox_select_controller.js
+  var checkbox_select_controller_default = class extends Controller {
+    checked() {
+      if (this.childTargets.map((x) => x.checked).includes(true)) {
+        if (this.submitTarget.classList.contains("hidden")) {
+          this.submitTarget.classList.remove("hidden");
+        }
+      } else {
+        this.submitTarget.classList.add("hidden");
+      }
+    }
+  };
+  __publicField(checkbox_select_controller_default, "targets", ["submit", "child"]);
+
   // app/javascript/controllers/index.js
   application.register("chart", chart_controller_default);
   application.register("modal", modal_controller_default);
   application.register("category_select", category_select_controller_default);
+  application.register("checkbox-select", checkbox_select_controller_default);
 
   // app/javascript/application.js
   require_all();

@@ -14,4 +14,4 @@ import CategorySelectController from "./category_select_controller"
 application.register("category_select", CategorySelectController)
 
 import CheckboxSelectController from "./checkbox_select_controller"
-application.register("checkbox_select", CheckboxSelectController)
+application.register("checkbox-select", CheckboxSelectController)
