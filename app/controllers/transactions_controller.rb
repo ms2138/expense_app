@@ -2,8 +2,8 @@ class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show edit update ]
   before_action :set_selected_month, only: [:index]
   before_action :set_selected_year, only: [:index]
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, except: [:index, :destroy_multiple]
+  after_action :verify_policy_scoped, only: [:index, :destroy_multiple]
   
   # GET /transactions or /transactions.json
   def index
@@ -38,6 +38,31 @@ class TransactionsController < ApplicationController
           render turbo_stream: [
             turbo_stream.update(helpers.dom_id(@transaction), partial: 'transactions/category_select', locals: { transaction: @transaction }),
             turbo_stream.update("chart", partial: 'transactions/chart', locals: { chart_data: @chart_data })
+          ]
+        end
+        format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
+        format.json { render :show, status: :ok, location: @transaction }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy_multiple   
+    respond_to do |format|
+      if policy_scope(Transaction).destroy(params[:transaction_ids])
+        month = get_month_selection
+        year = get_year_selection
+          
+        transaction_data = Transaction.chart_data_for(current_user, month, year)
+        @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
+        @pagy, @transactions = pagy(current_user.transactions.all_data_for(current_user, month, year))
+
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("chart", partial: 'transactions/chart', locals: { chart_data: @chart_data }),
+            turbo_stream.update("transaction_table", partial: 'shared/transaction_table', locals: { transactions: @transactions })
           ]
         end
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
