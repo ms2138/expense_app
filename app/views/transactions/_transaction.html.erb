@@ -1,4 +1,11 @@
 <tr>
+  <td>
+    <%= check_box_tag "transaction_ids[]", transaction.id, nil, 
+                      data: { action: "change->checkbox-select#checked",
+                              checkbox_select_target: "child" },
+                              multiple: true,
+                              class: "form-check-input" %>
+  </td>
   <td><%= transaction.posted_at %></td>
   <td><%= transaction.description %></td>
   <td>$<%= transaction.amount %></td>
