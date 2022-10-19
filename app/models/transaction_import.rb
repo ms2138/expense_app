@@ -38,7 +38,7 @@ class TransactionImport
       transaction.attributes = row.to_hash.slice("posted_at", "description", "amount")
 
       category = Category.where(user_id: user_id).find_by(name: row["category"]) || 
-                 Category.find_or_create_by!(user_id: user_id, name: "Miscellaneous")
+                 Category.find_or_create_by!(user_id: user_id, name: row["category"] || "Miscellaneous")
       transaction.category_id ||= category.id
       transaction
     end
