@@ -1,24 +1,16 @@
-<%= form_with(url: destroy_multiple_transactions_path, 
-              method: :delete, data: { controller: "checkbox-select" }) do |form| %>
-  <table class="table table-striped mt-4">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Posted</th>
-        <th scope="col">Description</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Category</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% transactions.each do |transaction| %>
-        <%= render transaction %>
-      <% end %>
-    </tbody>
-  </table>
-
-  <%= form.submit "Delete selected", data: { turbo_method: :delete, 
-                                             turbo_confirm: "Delete all selected transactions?",
-                                             checkbox_select_target: "submit" }, 
-                                            class: 'btn btn-danger btn-sm hidden' %>
-<% end %>
+<table class="table table-striped mt-4">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Posted</th>
+      <th scope="col">Description</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% transactions.each do |transaction| %>
+      <%= render transaction %>
+    <% end %>
+  </tbody>
+</table>
