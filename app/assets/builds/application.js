@@ -30962,6 +30962,9 @@
         this.submitTarget.classList.add("hidden");
       }
     }
+    submitClicked() {
+      this.submitTarget.classList.add("hidden");
+    }
   };
   __publicField(checkbox_select_controller_default, "targets", ["submit", "child"]);
 

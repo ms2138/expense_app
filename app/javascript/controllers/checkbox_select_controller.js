@@ -12,4 +12,8 @@ export default class extends Controller {
       this.submitTarget.classList.add('hidden')
     }
   }
+
+  submitClicked() {
+    this.submitTarget.classList.add('hidden')
+  }
 }
