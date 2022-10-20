@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   end
   
   resources :users, only: [:show], shallow: true do
-    resources :categories
+    resources :categories do
+      collection do
+        delete 'destroy_multiple'
+      end
+    end
   end
 
   root "transactions#index"
