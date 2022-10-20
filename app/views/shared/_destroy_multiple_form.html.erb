@@ -1,0 +1,7 @@
+<%= form_with(url: url, method: :delete, id: "destroy-multiple-form") do |form| %>
+  <%= form.submit "Delete selected", data: { turbo_method: :delete, 
+                                             turbo_confirm: 'Delete all selected transactions?',
+                                             action: "click->checkbox-select#submitClicked",
+                                             checkbox_select_target: 'submit' }, 
+                                     class: 'btn btn-danger btn-sm hidden' %>
+<% end %>
