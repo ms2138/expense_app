@@ -1,9 +1,15 @@
-<div>
+<div data-controller="checkbox-select">
   <h1 class="text-center mb-4"><%= @category.name %></h1>
   <hr \>
-</div>
 
-  <%= render "shared/transaction_table", transactions: @transactions %>
+  <div id="transaction_table">
+    <%= render "shared/transaction_table", transactions: @transactions %>
+  </div>
 
-  <%= render "shared/pagination" %>
+  <%= render partial: "shared/destroy_multiple_form", locals: { url: destroy_multiple_user_categories_path(current_user) } %>
+  <%= hidden_field_tag :category_id, @category.id, { form: "destroy-multiple-form" } %>
+
+  <div id="pagination">
+    <%= render "shared/pagination", pagy: @pagy %>
+  </div>
 </div>

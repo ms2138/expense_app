@@ -1,8 +1,8 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ index show new create destroy ]
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, except: [:index, :destroy_multiple]
+  after_action :verify_policy_scoped, only: [:index, :destroy_multiple]
 
   # GET /categories or /categories.json
   def index
@@ -65,6 +65,28 @@ class CategoriesController < ApplicationController
       format.turbo_stream { render turbo_stream: turbo_stream.remove("#{helpers.dom_id(@category)}") }
       format.html { redirect_to categories_url, notice: "Category was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def destroy_multiple
+    respond_to do |format|
+      if policy_scope(Transaction).destroy(params[:transaction_ids])
+
+        category = Category.find(params[:category_id])
+        @pagy, @transactions = pagy(policy_scope(category.transactions.ordered))
+        
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update("transaction_table", partial: 'shared/transaction_table', locals: { transactions: @transactions }),
+            turbo_stream.update("pagination", partial: 'shared/pagination', locals: { pagy: @pagy })
+          ]
+        end
+        format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
+        format.json { render :show, status: :ok, location: @transaction }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+      end
     end
   end
 
