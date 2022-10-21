@@ -75,12 +75,7 @@ class CategoriesController < ApplicationController
         category = Category.find(params[:category_id])
         @pagy, @transactions = pagy(policy_scope(category.transactions.ordered))
         
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update("transaction_table", partial: 'shared/transaction_table', locals: { transactions: @transactions }),
-            turbo_stream.update("pagination", partial: 'shared/pagination', locals: { pagy: @pagy })
-          ]
-        end
+        format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
         format.json { render :show, status: :ok, location: @transaction }
       else

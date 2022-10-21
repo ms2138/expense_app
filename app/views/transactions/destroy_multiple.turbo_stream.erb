@@ -1,0 +1,9 @@
+<%= turbo_stream.update "transaction_table" do %>
+  <%= render partial: "shared/transaction_table", locals: { transactions: @transactions } %>
+<% end %>
+<%= turbo_stream.update "chart" do %>
+  <%= render partial: 'transactions/chart', locals: { chart_data: @chart_data } %>
+<% end %>
+<%= turbo_stream.update "pagination" do %>
+  <%= render partial: 'shared/pagination', locals: { pagy: @pagy } %>
+<% end %>
