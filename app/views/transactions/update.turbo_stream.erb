@@ -1,0 +1,6 @@
+<%= turbo_stream.replace dom_id(@transaction) do %>
+  <%= render partial: "transactions/transaction", locals: { transaction: @transaction } %>
+<% end %>
+<%= turbo_stream.update "chart" do %>
+  <%= render partial: 'transactions/chart', locals: { chart_data: @chart_data } %>
+<% end %>

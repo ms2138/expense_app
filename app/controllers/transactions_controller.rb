@@ -34,12 +34,7 @@ class TransactionsController < ApplicationController
         @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
         @pagy, @transactions = pagy(current_user.transactions.all_data_for(current_user, month, year))
 
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update(helpers.dom_id(@transaction), partial: 'transactions/category_select', locals: { transaction: @transaction }),
-            turbo_stream.update("chart", partial: 'transactions/chart', locals: { chart_data: @chart_data })
-          ]
-        end
+        format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
         format.json { render :show, status: :ok, location: @transaction }
       else
