@@ -73,7 +73,7 @@ class CategoriesController < ApplicationController
       if policy_scope(Transaction).destroy(params[:transaction_ids])
 
         category = Category.find(params[:category_id])
-        @pagy, @transactions = pagy(policy_scope(category.transactions.ordered))
+        @pagy, @transactions = pagy(policy_scope(category.transactions.ordered), request_path: "/categories/#{category.id}")
         
         format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }

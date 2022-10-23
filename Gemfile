@@ -53,7 +53,7 @@ gem "bootsnap", require: false
 
 gem "faker", "~> 2.21"
 
-gem "pagy", "~> 5.10"
+gem "pagy", "~> 6.0.1"
 
 gem "pundit", "~> 2.2"
 

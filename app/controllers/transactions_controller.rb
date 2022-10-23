@@ -32,7 +32,7 @@ class TransactionsController < ApplicationController
           
         transaction_data = Transaction.chart_data_for(current_user, month, year)
         @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
-        @pagy, @transactions = pagy(current_user.transactions.all_data_for(current_user, month, year))
+        @pagy, @transactions = pagy(Transaction.all_data_for(current_user, month, year))
 
         format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
@@ -52,7 +52,9 @@ class TransactionsController < ApplicationController
           
         transaction_data = Transaction.chart_data_for(current_user, month, year)
         @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
-        @pagy, @transactions = pagy(Transaction.all_data_for(current_user, month, year).ordered)
+        @pagy, @transactions = pagy(Transaction.all_data_for(current_user, month, year).ordered, 
+                                    request_path: "/transactions", 
+                                    params: { "date[month]": month, "date[year]": year, "date[day]": "1"})
 
         format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
