@@ -32,7 +32,6 @@ class TransactionsController < ApplicationController
           
         transaction_data = Transaction.chart_data_for(current_user, month, year)
         @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
-        @pagy, @transactions = pagy(Transaction.all_data_for(current_user, month, year))
 
         format.turbo_stream
         format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
