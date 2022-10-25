@@ -24,9 +24,10 @@ class TransactionsController < ApplicationController
   end
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
-  def update
+  def update_chart
+    transaction = authorize Transaction.find(params[:transaction_id])
     respond_to do |format|
-      if @transaction.update(transaction_params)
+      if transaction.update(transaction_params)
         month = get_month_selection
         year = get_year_selection
           
@@ -34,11 +35,11 @@ class TransactionsController < ApplicationController
         @chart_data = chart_data_json(transaction_data.keys, transaction_data.values)
 
         format.turbo_stream
-        format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
-        format.json { render :show, status: :ok, location: @transaction }
+        format.html { redirect_to transaction_url(transaction), notice: "Transaction was successfully updated." }
+        format.json { render :show, status: :ok, location: transaction }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        format.json { render json: transaction.errors, status: :unprocessable_entity }
       end
     end
   end

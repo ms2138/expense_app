@@ -13,7 +13,7 @@ class TransactionPolicy < ApplicationPolicy
     update?
   end
 
-  def update?
+  def update_chart?
     user == record.user
   end
 end

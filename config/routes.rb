@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :transaction_imports, only: [:new, :create]
-  resources :transactions, only: [:index, :show, :edit, :update] do
+  resources :transactions, only: [:index, :show, :edit] do
+    patch 'update_chart'
     collection do
       delete 'destroy_multiple'
     end

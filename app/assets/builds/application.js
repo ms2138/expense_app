@@ -30929,10 +30929,10 @@
         'meta[name="csrf-token"]'
       ).content;
     }
-    selected(e) {
+    updateChart(e) {
       const transaction_id = e.target.dataset.id;
       const category_id = e.currentTarget.value;
-      fetch("/transactions/" + transaction_id, {
+      fetch("/transactions/" + transaction_id + "/update_chart", {
         body: JSON.stringify(
           {
             transaction: {
