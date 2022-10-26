@@ -3,7 +3,11 @@
   <hr \>
 
   <div id="transaction_table">
-    <%= render "shared/transaction_table", transactions: @transactions %>
+    <%= render "shared/transaction_table" do %>
+      <% @transactions.each do |transaction| %>
+        <%= render "shared/transaction_table_body", transaction: transaction %>
+      <% end %>
+    <% end %>
   </div>
 
   <%= render partial: "shared/destroy_multiple_form", locals: { url: destroy_multiple_user_categories_path(current_user) } %>

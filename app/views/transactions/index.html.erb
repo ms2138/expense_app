@@ -11,7 +11,15 @@
   <div data-controller="checkbox-select">
     <h2 class="pt-2">Transactions</h2>
     <div id="transaction_table">
-      <%= render "shared/transaction_table", transactions: @transactions %>
+      <%= render "shared/transaction_table" do %>
+        <% @transactions.each do |transaction| %>
+          <%= render "shared/transaction_table_body", transaction: transaction do %>
+            <div data-controller="category_select">
+              <%= render 'transactions/category_select', transaction: transaction %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
 
     <%= render partial: "shared/destroy_multiple_form", locals: { url: destroy_multiple_transactions_path } %>

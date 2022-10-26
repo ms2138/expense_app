@@ -9,9 +9,5 @@
   <td><%= transaction.posted_at %></td>
   <td><%= transaction.description %></td>
   <td>$<%= transaction.amount %></td>
-  <td>
-    <div data-controller="category_select">
-      <%= render 'transactions/category_select', transaction: transaction %>
-    </div>
-  </td>
+  <td><%= yield %></td>
 </tr>

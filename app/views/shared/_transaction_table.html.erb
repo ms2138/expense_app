@@ -9,8 +9,6 @@
     </tr>
   </thead>
   <tbody>
-    <% transactions.each do |transaction| %>
-      <%= render transaction %>
-    <% end %>
+    <%= yield %>
   </tbody>
 </table>
