@@ -30931,8 +30931,17 @@
     }
     updateChart(e) {
       const transaction_id = e.target.dataset.id;
+      const path = "/transactions/" + transaction_id + "/update_chart";
+      this.update(e, path);
+    }
+    updateCategory(e) {
+      const transaction_id = e.target.dataset.id;
+      const path = "/transactions/" + transaction_id + "/update_category";
+      this.update(e, path);
+    }
+    update(e, path) {
       const category_id = e.currentTarget.value;
-      fetch("/transactions/" + transaction_id + "/update_chart", {
+      fetch(path, {
         body: JSON.stringify(
           {
             transaction: {
