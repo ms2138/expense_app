@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   resources :transaction_imports, only: [:new, :create]
   resources :transactions, only: [:index, :show, :edit] do
-    patch 'update_chart'
+    patch 'update_chart', 'update_category'
+
     collection do
       delete 'destroy_multiple'
     end
