@@ -1,6 +1,6 @@
 <%= collection_select(:transaction, :category_id, 
                       current_user.categories.order(:name), 
                       :id, :name, { selected: transaction.category_id },
-                      data: { action: "change->category_select#updateChart",
+                      data: { action: action,
                               id: transaction.id },
                       class: "form-select form-select-sm") %>
