@@ -44,6 +44,23 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def update_category
+    @transaction = authorize Transaction.find(params[:transaction_id])
+    # Store current category to refresh it
+    @category = @transaction.category
+
+    respond_to do |format|
+      if @transaction.update(transaction_params)
+
+        @pagy, @transactions = pagy(policy_scope(@category.transactions.ordered), request_path: URI(request.referer).path)
+
+        format.turbo_stream
+        format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully updated." }
+        format.json { render :show, status: :ok, location: @transaction }
+      end
+    end
+  end
+
   def destroy_multiple   
     respond_to do |format|
       if policy_scope(Transaction).destroy(params[:transaction_ids])
