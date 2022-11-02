@@ -11,14 +11,10 @@
   <div data-controller="checkbox-select">
     <h2 class="pt-2">Transactions</h2>
     <div id="transaction_table">
-      <%= render "shared/transaction_table" do %>
-        <% @transactions.each do |transaction| %>
-          <%= render "shared/transaction_table_body", transaction: transaction do %>
-            <div data-controller="category_select">
-              <%= render 'transactions/category_select', transaction: transaction %>
-            </div>
-          <% end %>
-        <% end %>
+      <%= render "shared/transaction_table" do |transaction| %>
+        <div data-controller="category_select">
+          <%= render 'shared/category_select', transaction: transaction, action: "change->category_select#updateChart" %>
+        </div>
       <% end %>
     </div>
 

@@ -3,10 +3,10 @@
   <hr \>
 
   <div id="transaction_table">
-    <%= render "shared/transaction_table" do %>
-      <% @transactions.each do |transaction| %>
-        <%= render "shared/transaction_table_body", transaction: transaction %>
-      <% end %>
+    <%= render "shared/transaction_table" do |transaction| %>
+      <div data-controller="category_select">
+        <%= render 'shared/category_select', transaction: transaction, action: "change->category_select#updateCategory" %>
+      </div>
     <% end %>
   </div>
 
