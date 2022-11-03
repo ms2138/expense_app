@@ -1,5 +1,9 @@
 <%= turbo_stream.update "transaction_table" do %>
-  <%= render partial: "shared/transaction_table", locals: { transactions: @transactions } %>
+  <%= render "shared/transaction_table" do |transaction| %>
+    <div data-controller="category_select">
+      <%= render 'shared/category_select', transaction: transaction, action: "change->category_select#updateChart" %>
+    </div>
+  <% end %>
 <% end %>
 <%#= turbo_stream.update "pagination" do %>
   <%#= render partial: 'shared/pagination', locals: { pagy: @pagy } %>
